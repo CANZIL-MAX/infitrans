@@ -86,12 +86,12 @@ export default function InfiniSignalPage() {
   if (!initialized) {
     return (
       <div className="min-h-screen bg-black text-green-400 flex flex-col items-center justify-center p-6 font-mono">
-        <h1 className="text-xl mb-4">INITIATE SYSTEM</h1>
+        <h1 className="text-xl mb-4">WHAT DOES THIS MAKE YOU FEEL?</h1>
         <Button
           onClick={() => setInitialized(true)}
           className="mt-2 px-6 py-3 bg-green-700 hover:bg-green-600 rounded-xl text-white"
         >
-          YOU ARE ONE OF FEW
+          YOU ARE ONE OF FEW THAT WILL HEAR THIS SOUND
         </Button>
       </div>
     );

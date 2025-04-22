@@ -18,11 +18,14 @@ export default function InfiniSignalPage() {
   const [frequency, setFrequency] = useState(101.0);
   const [signalFound, setSignalFound] = useState(false);
   const [proximity, setProximity] = useState(0);
+  const [initialized, setInitialized] = useState(false);
 
   const infiniRef = useRef(null);
   const noiseRef = useRef(null);
 
   useEffect(() => {
+    if (!initialized) return;
+
     const infiniAudio = new Audio("/Favors.mp3");
     const noiseAudio = new Audio("/shs_dt_interference_radio_monster_138.mp3");
 
@@ -43,7 +46,7 @@ export default function InfiniSignalPage() {
     };
 
     playAudio();
-  }, []);
+  }, [initialized]);
 
   const handleFrequencyChange = (value) => {
     const freq = typeof value === "number" ? parseFloat(value.toFixed(1)) : 101.0;
@@ -79,6 +82,20 @@ export default function InfiniSignalPage() {
       </span>
     ));
   };
+
+  if (!initialized) {
+    return (
+      <div className="min-h-screen bg-black text-green-400 flex flex-col items-center justify-center p-6 font-mono">
+        <h1 className="text-xl mb-4">INITIATE SYSTEM</h1>
+        <Button
+          onClick={() => setInitialized(true)}
+          className="mt-2 px-6 py-3 bg-green-700 hover:bg-green-600 rounded-xl text-white"
+        >
+          INIT SYSTEM
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-green-400 flex flex-col items-center justify-center p-6 space-y-10 font-mono relative overflow-hidden">

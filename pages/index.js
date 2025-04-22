@@ -17,6 +17,7 @@ const Button = ({ children, ...props }) => (
 export default function InfiniSignalPage() {
   const [frequency, setFrequency] = useState(101.0);
   const [signalFound, setSignalFound] = useState(false);
+  const [proximity, setProximity] = useState(0);
   const [initialized, setInitialized] = useState(false);
 
   const infiniRef = useRef(null);
@@ -53,8 +54,12 @@ export default function InfiniSignalPage() {
     const match = freq === 104.6;
     setSignalFound(match);
 
-    if (infiniRef.current) infiniRef.current.volume = match ? 1 : 0;
-    if (noiseRef.current) noiseRef.current.volume = match ? 0 : 1;
+    const distance = Math.abs(freq - 104.6);
+    const proximityValue = Math.max(0, 1 - distance / 3);
+    setProximity(proximityValue);
+
+    if (infiniRef.current) infiniRef.current.volume = proximityValue;
+    if (noiseRef.current) noiseRef.current.volume = 1 - proximityValue;
 
     if (match) {
       const body = document.body;
@@ -67,7 +72,7 @@ export default function InfiniSignalPage() {
 
   const getSignalDots = () => {
     const totalDots = 20;
-    const activeDots = Math.round(signalFound ? 20 : 0);
+    const activeDots = Math.round(proximity * totalDots);
     return Array.from({ length: totalDots }, (_, i) => (
       <span
         key={i}
@@ -175,4 +180,12 @@ export default function InfiniSignalPage() {
 
         @keyframes glowFlash {
           0% { background-color: #00ff00; }
-          100% { background
+          100% { background-color: black; }
+        }
+        .glow-flash {
+          animation: glowFlash 1.2s ease-in-out;
+        }
+      `}</style>
+    </div>
+  );
+}

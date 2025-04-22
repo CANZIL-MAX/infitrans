@@ -91,7 +91,7 @@ export default function InfiniSignalPage() {
           onClick={() => setInitialized(true)}
           className="mt-2 px-6 py-3 bg-green-700 hover:bg-green-600 rounded-xl text-white"
         >
-          INIT SYSTEM
+          YOU ARE ONE OF FEW
         </Button>
       </div>
     );
